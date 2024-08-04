@@ -9,7 +9,12 @@ import org.springframework.web.bind.annotation.*;
 
 import com.api.senaibank.classe.Transacao;
 import com.api.senaibank.classe.service.TransacaoService;
+
+import java.time.LocalDate;
 import java.util.List;
+
+@RestController
+@RequestMapping("/Extrato")
 public class TransacaoController {
 
     @Autowired
@@ -40,4 +45,12 @@ public class TransacaoController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/extrato")
+    public List<Transacao> obterExtrato (
+        @RequestParam String numConta,
+        @RequestParam LocalDate dataInicial,
+        @RequestParam LocalDate dataFinal) {
+    return transacaoService.gerarExtrato(numConta, dataInicial, dataFinal);
+        }
+    
 }

@@ -1,4 +1,5 @@
 package com.api.senaibank.classe.service;
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,5 +34,9 @@ public class TransacaoService {
  public void delete(Long id){
     transacaoRepository.deleteById(id);
  }
+
+ public List<Transacao> gerarExtrato(String numConta, LocalDate dataInicial, LocalDate dataFinal){
+   return transacaoRepository.findByContaOrigem_NumContaAndDataBetween(numConta, dataInicial, dataFinal);
+ }   
 
 }

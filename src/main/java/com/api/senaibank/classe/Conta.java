@@ -12,6 +12,9 @@ public class Conta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)    
     private Long id;
 
+    @Column(name = "numConta", unique = true, nullable = false)
+    private String numConta;
+
     @Column(nullable = false)
     private Double saldo = 0.0;
 
@@ -19,7 +22,6 @@ public class Conta {
     @JoinColumn(name = "Clientes_id", referencedColumnName = " id")
     private Cliente cliente;
 
-    // Verificar o saldo antes de realizar a transferência
     public boolean temSaldo(double valor){
         if(this.getSaldo() >= valor) {
             return true;
