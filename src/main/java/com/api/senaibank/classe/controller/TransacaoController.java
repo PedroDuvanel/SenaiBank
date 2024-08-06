@@ -1,16 +1,15 @@
 package com.api.senaibank.classe.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
 
 import com.api.senaibank.classe.Transacao;
+import com.api.senaibank.classe.service.ContaService;
 import com.api.senaibank.classe.service.TransacaoService;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -20,12 +19,15 @@ public class TransacaoController {
     @Autowired
     TransacaoService transacaoService;
 
+    @Autowired
+    ContaService contaService;
+
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody Transacao transacao){
-        if( transacao.getContaOrigem().temSaldo(transacao.getValor()) ) {
+    public ResponseEntity<Transacao> create(@RequestBody Transacao transacao) {
+        if(contaService.temSaldo(transacao)){
             return ResponseEntity.ok(transacaoService.create(transacao));
         }
-        return ResponseEntity.badRequest().body("Saldo insuficiente");
+        return ResponseEntity.badRequest().build();
     }
     @GetMapping
     public ResponseEntity<List<Transacao>> getAll(){
@@ -45,12 +47,15 @@ public class TransacaoController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/extrato")
-    public List<Transacao> obterExtrato (
-        @RequestParam String numConta,
-        @RequestParam LocalDate dataInicial,
-        @RequestParam LocalDate dataFinal) {
-    return transacaoService.gerarExtrato(numConta, dataInicial, dataFinal);
+    @GetMapping("/extrato/{id}")
+    public ResponseEntity<List<Transacao>> getExtrato (@PathVariable Long idConta) {
+        List<Transacao> extrato = transacaoService.getExtrato(idConta);
+        
+        if (extrato.isEmpty()) {
+            return ResponseEntity.notFound().build();
         }
+
+        return ResponseEntity.ok(extrato);
+    }
     
 }

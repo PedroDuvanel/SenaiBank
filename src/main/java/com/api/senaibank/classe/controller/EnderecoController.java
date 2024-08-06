@@ -20,6 +20,8 @@ public class EnderecoController {
  public ResponseEntity<Endereco> create(@RequestBody Endereco endereco){
     return ResponseEntity.ok(enderecoService.create(endereco));
  }
+//  @PostMapping("/cep/{cep}")
+//  public ResponseEntity
  @GetMapping
  public ResponseEntity<List<Endereco>> getAll(){
     return ResponseEntity.ok(enderecoService.getAll());
@@ -29,6 +31,7 @@ public class EnderecoController {
  public ResponseEntity<Endereco> getByid(@PathVariable Long id){
     return ResponseEntity.ok(enderecoService.getById(id));
  }
+
  @PutMapping("/{id}")
  public ResponseEntity<Endereco> update(@PathVariable Long id, @RequestBody Endereco endereco){
     return ResponseEntity.ok(enderecoService.update(endereco, id));

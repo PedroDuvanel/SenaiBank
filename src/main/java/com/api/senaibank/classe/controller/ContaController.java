@@ -37,15 +37,14 @@ public class ContaController {
          return ResponseEntity.ok(conta);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Conta> atualizarConta(@PathVariable Long id, @RequestBody Conta contaAtualizada){
-       Conta conta = contaService.getByid(id);
-       if (conta == null) {
-        return null;
-        }
-        conta.setSaldo(contaAtualizada.getSaldo());
-        return ResponseEntity.ok(conta);
+    public ResponseEntity<Conta> update(@PathVariable Long id, @RequestBody Conta contaNova) {
+        Conta contaExistente = contaService.getByid(id);
 
-      
+        if (contaExistente == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(contaService.update(contaExistente, contaNova));
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarConta(@PathVariable Long id){

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.api.senaibank.classe.Conta;
+import com.api.senaibank.classe.Transacao;
 import com.api.senaibank.classe.repository.ContaRepository;
 
 
@@ -32,10 +33,28 @@ public class ContaService {
             contaAtualizar.setSaldo(conta.getSaldo());
            return contaRepository.save(contaAtualizar);
     }
-    public void delete(Long id){
-        contaRepository.deleteById(id);
+    public Conta delete(Long id){
+        Conta conta = getByid(id);
+        contaRepository.delete(conta);
+        return conta;
     }
     
+    public boolean temSaldo(Transacao transacao) {
+        Conta conta = getByid(transacao.getContaOrigem().getNumeroConta());
+
+        boolean temSaldo = (
+            conta.getSaldo()
+            >=
+            transacao.getValor()
+        );
+        return temSaldo;
+    }
+    public Conta update(Conta contaExistente, Conta contaNova) {
+
+        contaExistente.setSaldo(contaNova.getSaldo());
+
+        return contaRepository.save(contaExistente);
+    }
 
 
 }
