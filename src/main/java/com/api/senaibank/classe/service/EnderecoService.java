@@ -13,18 +13,11 @@ public class EnderecoService {
 @Autowired
 EnderecoRepository enderecoRepository;
 
-@Autowired
-ViaCepService viaCepService;
-
 public List<Endereco> getAll(){
     return enderecoRepository.findAll();
 }
 public Endereco getById(Long id){
     return enderecoRepository.findById(id).orElse(null);
-}
-public Endereco getEnderecoByCep(String cep){
-    Endereco endereco = viaCepService.getEnderecoByCep(cep);
-    return enderecoRepository.save(endereco);
 }
 public Endereco create(Endereco endereco){
     return enderecoRepository.save(endereco);
