@@ -16,14 +16,13 @@ public class ContaService {
 
     public Conta create(Conta conta){
         return contaRepository.save(conta);
-
     }
     public List<Conta> getAll(){
         return contaRepository.findAll();
     }
     public Conta getByid(Long id){
-        return contaRepository.findById(id).orElse(null);
-
+        return contaRepository.findById(id)
+                              .orElse(null);
     }
     public Conta atualizarConta(Conta conta, Long id){
        Conta contaAtualizar = getByid(id);
@@ -55,6 +54,5 @@ public class ContaService {
 
         return contaRepository.save(contaExistente);
     }
-
 
 }

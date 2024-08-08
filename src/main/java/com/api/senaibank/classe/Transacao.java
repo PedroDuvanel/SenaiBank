@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 import com.api.senaibank.classe.tipotransacao.TipoTransacao;
 
+
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;

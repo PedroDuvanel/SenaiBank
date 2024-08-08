@@ -25,7 +25,6 @@ public class ContaController {
     public ResponseEntity<List<Conta>> listadeContas(){
         List<Conta> contas = contaService.getAll();
         return ResponseEntity.ok(contas);
-        
     }
     
     @GetMapping("/{id}")
